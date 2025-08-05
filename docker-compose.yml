@@ -1,0 +1,38 @@
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: faydauser
+      POSTGRES_PASSWORD: faydapass
+      POSTGRES_DB: faydadb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./server
+    restart: always
+    env_file:
+      - ./server/.env
+    environment:
+      DATABASE_URL: postgres://faydauser:faydapass@postgres:5432/faydadb
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./client
+    restart: always
+    env_file:
+      - ./client/.env.local
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
