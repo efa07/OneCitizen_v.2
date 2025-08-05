@@ -26,7 +26,7 @@ const __dirname = dirname(__filename);
 
 app.use(cors(
     {
-        origin: 'onecitizen-production-076d.up.railway.app', 
+        origin: 'frontend-production-97a2.up.railway.app', 
         credentials: true
     }
 ));
@@ -43,4 +43,5 @@ app.use("/api/woreda/dashboard",woredaDash)
 app.use("/api/woreda",woredaRequest)
 
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
